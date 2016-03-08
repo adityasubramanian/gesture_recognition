@@ -12,7 +12,7 @@ from scipy.misc import logsumexp
 
 from sklearn.preprocessing import LabelBinarizer
 
-from utils import flatten_data
+from utilities import flatten_data
 
 from sklearn.base import BaseEstimator
 
@@ -30,6 +30,9 @@ def trans_weight_function(X):
     return Xnew 
 
     #return X #no diff
+
+def trans_weight_function(X):
+	X_diff = np.square(np.diff(X, n=1, axis = 0))
 
 def predict_test_words(test_imgs,test_words,fweights,tweights,transition_weighting=False):
     
@@ -743,8 +746,7 @@ class LinearCRFEnsemble(BaseEstimator):
         #feature_names = ["%s"] #add CLF - FEATURE feature names
         self.crf = LinearCRF(**kwargs)
         self.classifiers = classifiers
-        
-        
+     
     def fit(self, X, y, X_test=None, y_test=None):
         """Fit the CRF model (for a single chain) according to the given training data.
         Parameters
