@@ -480,7 +480,7 @@ def add_const_feature(X):
 
 class LinearCRF(BaseEstimator):
     
-    def __init__(self, label_names=None, feature_names=None, addone=False, regularization=None, lmbd=None, sigma=None, transition_weighting=False):
+    def __init__(self, label_names=None, feature_names=None, addone=True, regularization=None, lmbd=None, sigma=None, transition_weighting=True):
         """
             label_names: array of str objects that represent the labels
             feature_names: array of str objects that represent the features
