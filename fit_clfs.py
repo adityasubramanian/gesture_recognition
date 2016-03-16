@@ -3,7 +3,6 @@ Created on Mar 29, 2013
 @author: adityasubramanian
 @taken from author: tdomhan
 '''
-
 import numpy as np
 import pickle
 from sklearn import svm
@@ -25,8 +24,6 @@ from utils import *
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.svm.classes import LinearSVC
 from sklearn import cross_validation
-
-
 
 labels = ['temp', 'temp']
 
@@ -92,7 +89,7 @@ def run_clfs_on_data(classifiers, Xs, ys, add_last_action = False):
         print "running %s" % name
         clf_results = fit_clf_kfold(clf['clf'], Xs, ys, flatten=not clf['structured'], add_last_action=add_last_action)
         # with feature selection:
-        clf_results = fit_clf_kfold(clf['clf'], [X[:,select_features] for X in X_pers_all], y_pers_all,flatten=not clf['structured'])
+       # clf_results = fit_clf_kfold(clf['clf'], [X[:,select_features] for X in X_pers_all], y_pers_all,flatten=not clf['structured'])
         results[name] = clf_results
     return results
 

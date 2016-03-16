@@ -501,7 +501,7 @@ class LinearCRF(BaseEstimator):
         self.sigma = sigma
         self.addone = addone
         self.transition_weighting = transition_weighting
-    
+    	
         print "TWEIGHT", transition_weighting
         print "ADDONE", addone
     
@@ -700,7 +700,10 @@ class LinearCRF(BaseEstimator):
         
     def plot_least_important_features(self, n=10):
         self.plot_important_features(n,best=False)
-    
+
+    def plot_most_important_features(self, n= 10):
+	self.plot_important_features(n,best=True)
+
     def plot_weights(self):
         """
         Plot the weight matrices using matplotlib.

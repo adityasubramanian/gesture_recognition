@@ -80,7 +80,7 @@ def unflatten_per_person(X_all,y_all,persons_all):
         
         last_person = person
         
-    Xtotal.append(Xperson)
+    Xtotal.append(Xperson) 
     y_total.append(y_person)
     
     return ([np.array(x) for x in Xtotal], [np.array(y) for y in y_total])
