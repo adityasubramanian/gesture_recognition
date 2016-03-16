@@ -220,8 +220,6 @@ if __name__ == '__main__':
         print confusion_matrix_report(y_all_gold, y_all_predict, labels)
         print confusion_matrix(y_all_gold, y_all_predict)
         
-        
-    
     crf_classifiers =  {
                         "CRF": {'clf': LinearCRF(feature_names=feature_names, label_names=labels, addone=True, regularization="l2", lmbd=0.01, sigma=100, transition_weighting=False),
                             'structured': True},
@@ -320,7 +318,6 @@ if __name__ == '__main__':
     print confusion_matrix_report(y_test, y_predict, labels)
 
     # measure the transitions we get right:
-
 
 print "done"
     
