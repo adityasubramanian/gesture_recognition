@@ -288,7 +288,7 @@ class CRFTrainer():
         
         #print "INITIALIZTAION: %f" % (time.clock() - tick)
         tick = time.clock()
-        
+
         for X, word in zip(train_imgs, train_words):
             #print "BEGIN WORD: %f" % (time.clock() - tick)
             tick = time.clock()
