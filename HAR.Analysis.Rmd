@@ -1,0 +1,67 @@
+---
+title: "HAR_Analysis"
+author: "Shairoz Sohail (ssohai3)"
+date: "March 23, 2016"
+output: html_document
+---
+
+```{r, cache = TRUE, results = 'hide'}
+set.seed(1234)
+library(caret)
+library(class)
+library(MASS)
+library(nnet)
+train <- read.csv("~/Desktop/Har Analysis/TrainData.csv")
+test <- read.csv("~/Desktop/Har Analysis/TestData.csv")
+
+```
+
+\
+<h4> We first [center](http://www.theanalysisfactor.com/centering-and-standardizing-predictors/) the predictors, they are already scaled </h4>
+```{r, results = 'hide', cache=TRUE}
+levels(train$Activity)
+numPredictors = ncol(train) - 2
+zScaleTrain = preProcess(train[, 1:numPredictors])
+scaledX = predict(zScaleTrain, train[, 1:numPredictors])
+
+```
+\
+<h4> Since there are a large number of predictors, there is a high probability that many are highly [correlated](https://en.wikipedia.org/wiki/Multicollinearity), this may hurt our analysis by inflating the variance of our models. Thus, we remove these </h4>
+
+```{r, cache = TRUE}
+correlatedPredictors = findCorrelation(cor(scaledX), cutoff = 0.95)
+reducedCorrelationX = scaledX[, -correlatedPredictors]
+Pred_to_keep <- names(reducedCorrelationX)
+Pred_to_keep <- Pred_to_keep[Pred_to_keep %in% names(test)==TRUE]
+# Updating data frame with relevant predictors
+Traindf <- data.frame(train$Activity, train[ ,Pred_to_keep])
+Testdf <- data.frame(test$Activity, test[ ,Pred_to_keep])
+
+```
+\
+<h4> We now run model for predicting on a catagorical variable, the [Multinomial](http://www.ats.ucla.edu/stat/r/dae/mlogit.htm) model. With our subset of <300 predictors, we achieve 89.3 % accuracy on our test set. </h4>
+```{r, cache = TRUE, results='hold'}
+HAR_MN <- multinom(train.Activity ~ ., data = Traindf, MaxNWts=2000)
+MN_Pred <- predict(HAR_MN, Testdf)
+mean(MN_Pred==Testdf$test.Activity) # 89.3% Accuracy
+
+```
+\
+<h4> Just to see the effect of removing such a large chunk of our data, we now run the same model on our full dataset. Note that this is bad practice, since very high correlations amongst our predictors are inflating our accuracy results. We also nearly double our computational time since we must now use 4000 weights instead of 2000. In the end we get worse results. This shows our variable selection was quite effective. </h4>
+```{r, cache = TRUE, results='hold'}
+HAR_MN2 <- multinom(Activity ~ ., data = train, MaxNWts = 4000)
+MN2_Pred <- predict(HAR_MN2, test)
+mean(MN2_Pred==test$Activity) 
+# 87.9 % accuracy
+```
+\
+<h4> We now run a very popular method for classification, known as [Random Forest](https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm). We achieve a surprisingly good result at 95% accuracy 
+using only our subset of <300 predictors. While computational costs are high, we may adjust model parameters and use a parallel processing environment to reduce this. </h4>
+
+```{r, results = 'hold', cache=TRUE, tidy=TRUE}
+library(randomForest)
+HAR_RF <- randomForest(train.Activity ~ ., data = Traindf)
+mean(predict(HAR_RF, Testdf[ ,-1])==Testdf$test.Activity)
+
+```
+
