@@ -25,6 +25,7 @@ from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.svm.classes import LinearSVC
 from sklearn import cross_validation
 
+
 labels = ['temp', 'temp', 'temp']
 
 def SVM_feature_extraction(X_train, y_train, X_test):
@@ -130,6 +131,38 @@ def unflatten_per_person(X_all,y_all,persons_all):
 def flatten_data(X,y):
     return np.concatenate(X), np.concatenate(y)
 
+def get_last_action_feature(X,ys):
+    """
+    Convert the labels in ys into a one-hot representation.
+    The result will be shifted so that each row represents the last action.
+    The first row everything will be 0.
+    """
+    onehot = OneHotEncoder()
+    onehot.fit([[y] for y in ys])
+    
+    actions = onehot.transform([[y] for y in ys])
+    actions = np.asarray(actions.todense())
+    #the first row is all zeros, because there is no prior action:
+    last_action = np.zeros(actions.shape)
+    last_action[1:,:] = actions[:-1,:]
+
+    return onehot,np.concatenate([X,last_action],axis=1)
+    
+def predict_with_last_action(clf, X, onehot):
+    """
+        Predict one at a time and always add last action to 
+        the next prediction using the onehot encoder.
+    """
+    lasty = np.zeros(6) #TODO: remove harding of 6
+    y_predict = []
+    for x in X:
+        x_last_action = np.concatenate([x,lasty])
+        y = clf.predict([x_last_action])
+        y_predict.append(y[0])
+        lasty = np.array(onehot.transform([y]).todense()).flatten()
+        
+    return y_predict
+
 if __name__ == '__main__':
     print "Loading DATA"
 
@@ -193,10 +226,10 @@ if __name__ == '__main__':
                    "Gaussian Naive Bayes": {'clf': GaussianNB(), 'structured': False},
                    #"SVMHMM": {'clf': SVMHMMCRF(C=1), 'structured': True},
                    "KNN (weights: uniform, neighbors=5)": {'clf': KNeighborsClassifier(), 'structured': False},
-                   "Decision Tree": {'clf': DecisionTreeClassifier(), 'structured': False},
+                   #"Decision Tree": {'clf': DecisionTreeClassifier(), 'structured': False},
                    "RandomForest": {'clf': RandomForestClassifier(), 'structured': False},
-                   "CRF": {'clf': LinearCRF(feature_names=feature_names, label_names=labels, addone=True, regularization="l2", lmbd=0.01, sigma=100, transition_weighting=False),
-                            'structured': True},
+                   #"CRF": {'clf': LinearCRF(feature_names=feature_names, label_names=labels, addone=True, regularization="l2", lmbd=0.01, sigma=100, transition_weighting=False),
+                   #         'structured': True},
                    }
     
     results = run_clfs_on_data(classifiers, X_pers_all, y_pers_all)
@@ -284,6 +317,7 @@ if __name__ == '__main__':
     clf = LinearSVC() # things get worse when adding the last action to a linear SVM classifier
     clf = svm.SVC(kernel='poly') # same is true for the poly kernel svm
     clf = svm.SVC()#and also with a rbf kernel
+    clf = svm.SVC() 
     clf = RandomForestClassifier()
     clf.fit(X_train_last_action, y_train)
        
@@ -319,7 +353,6 @@ if __name__ == '__main__':
     print confusion_matrix_report(y_test, y_predict, labels)
 
     # measure the transitions we get right:
-
 print "done"
     
     

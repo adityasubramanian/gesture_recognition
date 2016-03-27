@@ -4,32 +4,23 @@ Created on Apr 12, 2013
 '''
 
 from collections import defaultdict
-
-import numpy as np
-
 from scipy.optimize import minimize
 from scipy.misc import logsumexp
-
 from sklearn.preprocessing import LabelBinarizer
-
 from utilities import flatten_data
-
 from sklearn.base import BaseEstimator
-
+import numpy as np
 import time
 
 def trans_weight_function(X):
     """
     Calculates (x(t)-x(t+1))^2
-    
     This function will be used to weight the transition weights.
     """
     X_diff = np.square(np.diff(X, n=1, axis=0)) # squared diff
     Xnew = np.zeros(X.shape)
     Xnew[:-1,:] = X_diff
     return Xnew 
-
-    #return X #no diff
 
 def trans_weight_function(X):
 	X_diff = np.square(np.diff(X, n=1, axis = 0))

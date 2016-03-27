@@ -52,7 +52,7 @@ class SVMHMMCRF(BaseEstimator):
     def predict(self, X, viterbi=False):
         Xs = [X]
         return self.batch_predict(Xs)
-    
+
     def batch_predict(self, Xs, dump = True):
         qids = [np.array([i] * len(Xs[i])) for i in range(len(Xs))]
         ys = [np.array([0] * len(Xs[i])) for i in range(len(Xs))]
