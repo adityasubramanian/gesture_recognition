@@ -25,7 +25,7 @@ from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.svm.classes import LinearSVC
 from sklearn import cross_validation
 
-labels = ['temp', 'temp']
+labels = ['temp', 'temp', 'temp']
 
 def SVM_feature_extraction(X_train, y_train, X_test):
     """
@@ -179,7 +179,7 @@ if __name__ == '__main__':
     print "Status: Training Classifiers"
     
     ensemble_classifiers = {
-                                "linear Support Vector Classifier": {'clf': LinearSVC(), 'structured': False},
+                                "Linear Support Vector Classifier": {'clf': LinearSVC(), 'structured': False},
                                 "Logistic Regression": {'clf': LogisticRegression(), 'structured': False},
                                 "SGDClassifier":{'clf': SGDClassifier(),'structured':False},
                                 }
@@ -250,6 +250,7 @@ if __name__ == '__main__':
     results_feature_selection = run_clfs_on_data(classifiers, [X[:,selected_features] for X in X_pers_all], y_pers_all)
     results_feature_selection = run_clfs_on_data(classifiers, [rfecv.transform(X) for X in X_pers_all], y_pers_all)
     
+
     
     clf_results = fit_clf_kfold(clf, X_pers_all, y_pers_all,flatten=False)
     
