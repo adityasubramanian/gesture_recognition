@@ -270,8 +270,8 @@ if __name__ == '__main__':
         
         y_all_gold = np.concatenate(zip(*clf_results)[0])
         y_all_predict = np.concatenate(zip(*clf_results)[1])
-        
-        print classification_report(y_all_gold, y_all_predict, target_names = labels)
+
+        #print classification_report(y_all_gold, y_all_predict, target_names = labels)
         print confusion_matrix_report(y_all_gold, y_all_predict, labels)
         print confusion_matrix(y_all_gold, y_all_predict)
         
