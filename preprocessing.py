@@ -21,6 +21,7 @@ from crf import LinearCRF, LinearCRFEnsemble
 from svmhmm import SVMHMMCRF
 from sklearn.metrics import accuracy_score
 from utils import *
+from utilities import * 
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.svm.classes import LinearSVC
 from sklearn import cross_validation
@@ -162,6 +163,27 @@ def predict_with_last_action(clf, X, onehot):
         lasty = np.array(onehot.transform([y]).todense()).flatten()
         
     return y_predict
+    
+def num_label_changes(y):
+    """
+        For a label sequence this function calculates the number of times the label changes.
+        e.g. num_label_changes([1,1,1,2,2,2,3,3]) = 2
+    """
+    num_changes = 0
+    for y, y_next in zip(y, y[1:]):
+        if y != y_next:
+            num_changes += 1
+    return num_changes
+
+def label_smoothness(y_predict):
+    """
+        Number of label transitions over number of labels.
+        
+        The smaller the smoother it is.
+    """
+    n = len(y_predict)
+    num_changes_predict = num_label_changes(y_predict)
+    return num_changes_predict / float(n)
 
 if __name__ == '__main__':
     print "Loading DATA"
