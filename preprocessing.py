@@ -1,8 +1,3 @@
-'''
-Created on Mar 29, 2013
-@author: adityasubramanian
-@taken from author: tdomhan
-'''
 import numpy as np
 import pickle
 from sklearn import svm
@@ -27,8 +22,7 @@ from sklearn.svm.classes import LinearSVC
 from sklearn import cross_validation
 
 
-labels = ['temp', 'temp', 'temp']
-
+labels = ['SGD Classifier', 'Logistic Regression', 'Linear Support Vector Classifier', 'Gaussian Naive Bayes', 'KNN (N = 5)', 'Random Forest']
 def SVM_feature_extraction(X_train, y_train, X_test):
     """
     SVM Classifier
@@ -78,7 +72,6 @@ def fit_clf_kfold(clf,Xs,ys,flatten=True,n_folds=5, add_last_action=False):
         
         result.append((y_gold,y_predict))
     return result
-
 
 def get_diff_features(X):
     X_diff = np.diff(X, n=1, axis=0)
@@ -254,6 +247,9 @@ if __name__ == '__main__':
                    #         'structured': True},
                    }
     
+
+
+
     results = run_clfs_on_data(classifiers, X_pers_all, y_pers_all)
     
     results_last_action = run_clfs_on_data(classifiers, X_pers_all, y_pers_all, add_last_action=True)

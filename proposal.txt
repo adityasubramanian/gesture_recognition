@@ -1,0 +1,17 @@
+Statistical model for walking based on sensor data from a 
+
+Source: 	
+	- wrist-worn motion sensing device (accelerometer and gyroscope).
+Goal: 
+	- captures the variability in walking for a single human subject as well as across subjects. Based on this model, the students will seek to classify types of walking and classify the types of users based only on sensor data. 
+
+Extras:
+	- This project will require the students to undertake a literature survey on Human
+		Activity Recognition (HAR), access publicly available databases of motion sensor data,
+
+
+Deliverables:
+	- Develop software tools to process this data and visualize the results
+
+Outcomes: 
+	
