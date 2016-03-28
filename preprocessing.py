@@ -20,9 +20,18 @@ from utilities import *
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.svm.classes import LinearSVC
 from sklearn import cross_validation
+from sklearn.feature_selection import RFECV
 
+lables = ['1', '2', '3', '4', '5', '6']
+label_meanings = {
+	'SGD Classifier': '1', 
+	'Logistic Regression': '2', 
+	'Linear Support Vector Classifier': '3', 
+	'Gaussian Naive Bayes': '4', 
+	'KNN (N = 5)': '5', 
+	'Random Forest': '6'
+}
 
-labels = ['SGD Classifier', 'Logistic Regression', 'Linear Support Vector Classifier', 'Gaussian Naive Bayes', 'KNN (N = 5)', 'Random Forest']
 def SVM_feature_extraction(X_train, y_train, X_test):
     """
     SVM Classifier
@@ -32,7 +41,7 @@ def SVM_feature_extraction(X_train, y_train, X_test):
     X_train_t = clf.decision_function(X_train)
     X_test_t = clf.decision_function(X_test)
     return (X_train_t,X_test_t)
-def fit_clf_kfold(clf,Xs,ys,flatten=True,n_folds=5, add_last_action=False):
+def fit_clf_kfold(clf,Xs,ys,flatten=True,n_folds=5, add_last_action=False): 
     """
     X: an array of X, one for each person
     y: an array of array of labels, one for each person
@@ -298,8 +307,7 @@ if __name__ == '__main__':
                             'structured': True},
                    }
     
-    results_feature_selection = run_clfs_on_data(classifiers, [X[:,selected_features] for X in X_pers_all], y_pers_all)
-    results_feature_selection = run_clfs_on_data(classifiers, [rfecv.transform(X) for X in X_pers_all], y_pers_all)
+    results_feature_selection = run_clfs_on_data(classifiers, [RFECV.transform(X) for X in X_pers_all], y_pers_all)
     
 
     
@@ -369,7 +377,7 @@ if __name__ == '__main__':
     print classification_report(y_test, y_predict, target_names = labels)
 
     print confusion_matrix_report(y_test, y_predict, labels)
-
+    print label_meanings
     # measure the transitions we get right:
 print "done"
     
