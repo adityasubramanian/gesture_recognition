@@ -248,12 +248,8 @@ if __name__ == '__main__':
                    "Logistic Regression": {'clf': LogisticRegression(), 'structured': False},
                    "linear Support Vector Classifier": {'clf': LinearSVC(), 'structured': False},
                    "Gaussian Naive Bayes": {'clf': GaussianNB(), 'structured': False},
-                   #"SVMHMM": {'clf': SVMHMMCRF(C=1), 'structured': True},
                    "KNN (weights: uniform, neighbors=5)": {'clf': KNeighborsClassifier(), 'structured': False},
-                   #"Decision Tree": {'clf': DecisionTreeClassifier(), 'structured': False},
                    "RandomForest": {'clf': RandomForestClassifier(), 'structured': False},
-                   #"CRF": {'clf': LinearCRF(feature_names=feature_names, label_names=labels, addone=True, regularization="l2", lmbd=0.01, sigma=100, transition_weighting=False),
-                   #         'structured': True},
                    }
     
 
@@ -312,9 +308,7 @@ if __name__ == '__main__':
 
     
     clf_results = fit_clf_kfold(clf, X_pers_all, y_pers_all,flatten=False)
-    
-    
-    
+        
     clf = svm.SVC()
     clf = LogisticRegression()
     clf = LogisticRegression(penalty='l1',C=100)
