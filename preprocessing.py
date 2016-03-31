@@ -35,10 +35,10 @@ label_meanings = {
 def SVM_feature_extraction(X_train, y_train, X_test):
     """
     SVM Classifier
-    """
-    clf = svm.LinearSVC()
-    clf.fit(X_train, y_train)
-    X_train_t = clf.decision_function(X_train)
+    """ 
+    clf = svm.LinearSVC() # Initializing a svm Linear SVC
+    clf.fit(X_train, y_train) # Fitting the svc on X and y_train 
+    X_train_t = clf.decision_function(X_train)  # Returning train and test for the X_ values after decision_function() has been applied. 
     X_test_t = clf.decision_function(X_test)
     return (X_train_t,X_test_t)
 def fit_clf_kfold(clf,Xs,ys,flatten=True,n_folds=5, add_last_action=False): 
