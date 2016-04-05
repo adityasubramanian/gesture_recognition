@@ -191,28 +191,28 @@ if __name__ == '__main__':
     print "Loading DATA"
 
     print "Training Data.. (X) "
-    X_train = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/STAT427/project/uci_har_dataset/train/X_train.txt')
+    X_train = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/stat427/project/uci_har_dataset/train/X_train.txt')
 
     print "Training Data.. (Y) "
-    y_train = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/STAT427/project/uci_har_dataset/train/y_train.txt', dtype=np.int)
+    y_train = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/stat427/project/uci_har_dataset/train/y_train.txt', dtype=np.int)
 
     print "Training Data.. (Persons)"
-    persons_train = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/STAT427/project/uci_har_dataset/train/subject_train.txt', dtype=np.int)
+    persons_train = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/stat427/project/uci_har_dataset/train/subject_train.txt', dtype=np.int)
 
 
     print "Testing Data.. (X) "
-    X_test = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/STAT427/project/uci_har_dataset/test/X_test.txt')
+    X_test = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/stat427/project/uci_har_dataset/test/X_test.txt')
 
     print "Testing Data.. (Y) "
-    y_test = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/STAT427/project/uci_har_dataset/test/y_test.txt', dtype=np.int)
+    y_test = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/stat427/project/uci_har_dataset/test/y_test.txt', dtype=np.int)
 
     print "Testing Data.. (Persons) "
-    persons_test = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/STAT427/project/uci_har_dataset/test/subject_test.txt', dtype=np.int)
+    persons_test = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/stat427/project/uci_har_dataset/test/subject_test.txt', dtype=np.int)
 
     X_all = np.concatenate([X_train, X_test])
     y_all = np.concatenate([y_train, y_test])
     
-    feature_names = [x.split(' ')[1] for x in open('/home/aditya/Documents/UIUC/spring_2016/STAT427/project/uci_har_dataset/features.txt').read().split('\n') if len(x) > 0]
+    feature_names = [x.split(' ')[1] for x in open('/home/aditya/Documents/UIUC/spring_2016/stat427/project/uci_har_dataset/features.txt').read().split('\n') if len(x) > 0]
     
     #SVM-HMM dumping
     #dump_svmlight_file(X_test,y_test,"/Users/tdomhan/Downloads/svm_hmm/activity-data/Xtest.data",zero_based=False,query_id=persons_test)
@@ -220,7 +220,7 @@ if __name__ == '__main__':
     #laod the SVM-HMM predictions
     #y_predict = np.loadtxt("/Users/tdomhan/Downloads/svm_hmm/classfy.tag", dtype=int)
     
-    feature_names = [x.split(' ')[1] for x in open('/home/aditya/Documents/UIUC/spring_2016/STAT427/project/uci_har_dataset/features.txt').read().split('\n') if len(x) > 0]
+    feature_names = [x.split(' ')[1] for x in open('/home/aditya/Documents/UIUC/spring_2016/stat427/project/uci_har_dataset/features.txt').read().split('\n') if len(x) > 0]
     
     """ Split by person: """
     X_train_pers, y_train_pers = unflatten_per_person(X_train, y_train, persons_train)
