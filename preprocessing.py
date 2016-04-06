@@ -93,7 +93,7 @@ def run_clfs_on_data(classifiers, Xs, ys, add_last_action = False):
         print "Currently Running: %s" % name
         clf_results = fit_clf_kfold(clf['clf'], Xs, ys, flatten=not clf['structured'], add_last_action=add_last_action)
         # with feature selection:
-       # clf_results = fit_clf_kfold(clf['clf'], [X[:,select_features] for X in X_pers_all], y_pers_all,flatten=not clf['structured'])
+		#clf_results = fit_clf_kfold(clf['clf'], [X[:,select_features] for X in X_pers_all], y_pers_all,flatten=not clf['structured'])
         results[name] = clf_results
     return results
 
@@ -199,6 +199,8 @@ if __name__ == '__main__':
     print "Training Data.. (Persons)"
     persons_train = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/stat427/project/uci_har_dataset/train/subject_train.txt', dtype=np.int)
 
+	#persons_train = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/stat427/project/train.txt', dtype=np.int)
+	
 
     print "Testing Data.. (X) "
     X_test = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/stat427/project/uci_har_dataset/test/X_test.txt')
@@ -208,6 +210,8 @@ if __name__ == '__main__':
 
     print "Testing Data.. (Persons) "
     persons_test = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/stat427/project/uci_har_dataset/test/subject_test.txt', dtype=np.int)
+
+    #persons_test = np.loadtxt('/home/aditya/Documents/UIUC/spring_2016/stat427/project/test.txt', dtype=np.int)
 
     X_all = np.concatenate([X_train, X_test])
     y_all = np.concatenate([y_train, y_test])
@@ -244,12 +248,12 @@ if __name__ == '__main__':
     crf_ensemble = LinearCRFEnsemble(ensemble_classifiers, addone=True, regularization=None, lmbd=0.01, sigma=100, transition_weighting=True)
     
     classifiers = {
-                   "SGDClassifier":{'clf': SGDClassifier(),'structured':False},
-                   "Logistic Regression": {'clf': LogisticRegression(), 'structured': False},
+   #                "SGDClassifier":{'clf': SGDClassifier(),'structured':False},
+   #                "Logistic Regression": {'clf': LogisticRegression(), 'structured': False},
                    "linear Support Vector Classifier": {'clf': LinearSVC(), 'structured': False},
-                   "Gaussian Naive Bayes": {'clf': GaussianNB(), 'structured': False},
-                   "KNN (weights: uniform, neighbors=5)": {'clf': KNeighborsClassifier(), 'structured': False},
-                   "RandomForest": {'clf': RandomForestClassifier(), 'structured': False},
+   #                "Gaussian Naive Bayes": {'clf': GaussianNB(), 'structured': False},
+   #                "KNN (weights: uniform, neighbors=5)": {'clf': KNeighborsClassifier(), 'structured': False},
+   #                "RandomForest": {'clf': RandomForestClassifier(), 'structured': False},
                    }
     
 
