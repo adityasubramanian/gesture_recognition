@@ -41,6 +41,9 @@ def SVM_feature_extraction(X_train, y_train, X_test):
     X_train_t = clf.decision_function(X_train)  # Returning train and test for the X_ values after decision_function() has been applied. 
     X_test_t = clf.decision_function(X_test)
     return (X_train_t,X_test_t)
+
+# Use SVD analysis. 
+
 def fit_clf_kfold(clf,Xs,ys,flatten=True,n_folds=5, add_last_action=False): 
     """
     X: an array of X, one for each person
@@ -248,16 +251,13 @@ if __name__ == '__main__':
     crf_ensemble = LinearCRFEnsemble(ensemble_classifiers, addone=True, regularization=None, lmbd=0.01, sigma=100, transition_weighting=True)
     
     classifiers = {
-   #                "SGDClassifier":{'clf': SGDClassifier(),'structured':False},
-   #                "Logistic Regression": {'clf': LogisticRegression(), 'structured': False},
+                  "SGDClassifier":{'clf': SGDClassifier(),'structured':False},
+                   "Logistic Regression": {'clf': LogisticRegression(), 'structured': False},
                    "linear Support Vector Classifier": {'clf': LinearSVC(), 'structured': False},
-   #                "Gaussian Naive Bayes": {'clf': GaussianNB(), 'structured': False},
-   #                "KNN (weights: uniform, neighbors=5)": {'clf': KNeighborsClassifier(), 'structured': False},
-   #                "RandomForest": {'clf': RandomForestClassifier(), 'structured': False},
+                   "Gaussian Naive Bayes": {'clf': GaussianNB(), 'structured': False},
+                   "KNN (weights: uniform, neighbors=5)": {'clf': KNeighborsClassifier(), 'structured': False},
+                   "RandomForest": {'clf': RandomForestClassifier(), 'structured': False},
                    }
-    
-
-
 
     results = run_clfs_on_data(classifiers, X_pers_all, y_pers_all)
     
