@@ -28,7 +28,7 @@ label_meanings = {
 	'Logistic Regression': '2', 
 	'Linear Support Vector Classifier': '3', 
 	'Gaussian Naive Bayes': '4', 
-	'KNN (N = 5)': '5', 
+	'KNN (N = 10)': '5', 
 	'Random Forest': '6'
 }
 
@@ -44,7 +44,7 @@ def SVM_feature_extraction(X_train, y_train, X_test):
 
 # Use SVD analysis. 
 
-def fit_clf_kfold(clf,Xs,ys,flatten=True,n_folds=5, add_last_action=False): 
+def fit_clf_kfold(clf,Xs,ys,flatten=True,n_folds=10, add_last_action=False): 
     """
     X: an array of X, one for each person
     y: an array of array of labels, one for each person
@@ -252,7 +252,7 @@ if __name__ == '__main__':
                    "Logistic Regression": {'clf': LogisticRegression(), 'structured': False},
                    "linear Support Vector Classifier": {'clf': LinearSVC(), 'structured': False},
                    "Gaussian Naive Bayes": {'clf': GaussianNB(), 'structured': False},
-                   "KNN (weights: uniform, neighbors=5)": {'clf': KNeighborsClassifier(), 'structured': False},
+                   "KNN (weights: uniform, neighbors=10)": {'clf': KNeighborsClassifier(n_neighbors = 10), 'structured': False},
                    "RandomForest": {'clf': RandomForestClassifier(), 'structured': False},
                    }
 
