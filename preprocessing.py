@@ -144,16 +144,15 @@ def get_last_action_feature(X,ys):
     The first row everything will be 0.
     """
     onehot = OneHotEncoder()
-    onehot.fit([[y] for y in ys])
-    
+    onehot.fit([[y] for y in ys]) 
     actions = onehot.transform([[y] for y in ys])
     actions = np.asarray(actions.todense())
     #the first row is all zeros, because there is no prior action:
     last_action = np.zeros(actions.shape)
     last_action[1:,:] = actions[:-1,:]
 
-    return onehot,np.concatenate([X,last_action],axis=1)
-    
+    return onehot,np.concatenate([X,last_action],axis=1)    
+
 def predict_with_last_action(clf, X, onehot):
     """
         Predict one at a time and always add last action to 
@@ -166,9 +165,7 @@ def predict_with_last_action(clf, X, onehot):
         y = clf.predict([x_last_action])
         y_predict.append(y[0])
         lasty = np.array(onehot.transform([y]).todense()).flatten()
-        
-    return y_predict
-    
+    return y_predict  
 def num_label_changes(y):
     """
         For a label sequence this function calculates the number of times the label changes.
@@ -251,7 +248,7 @@ if __name__ == '__main__':
     crf_ensemble = LinearCRFEnsemble(ensemble_classifiers, addone=True, regularization=None, lmbd=0.01, sigma=100, transition_weighting=True)
     
     classifiers = {
-                  "SGDClassifier":{'clf': SGDClassifier(),'structured':False},
+                   "SGDClassifier":{'clf': SGDClassifier(),'structured':False},
                    "Logistic Regression": {'clf': LogisticRegression(), 'structured': False},
                    "linear Support Vector Classifier": {'clf': LinearSVC(), 'structured': False},
                    "Gaussian Naive Bayes": {'clf': GaussianNB(), 'structured': False},
