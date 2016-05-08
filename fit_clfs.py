@@ -3,7 +3,7 @@ Created on Mar 29, 2013
 @author: adityasubramanian
 @taken from author: tdomhan
 '''
-#### IMPORT STATEMENTS  
+  
 import numpy as np
 import pickle
 from sklearn import svm
@@ -27,6 +27,7 @@ from sklearn.svm.classes import LinearSVC
 from sklearn import cross_validation
 
 labels = ['temp', 'temp']
+
 
 def SVM_feature_extraction(X_train, y_train, X_test):
     """

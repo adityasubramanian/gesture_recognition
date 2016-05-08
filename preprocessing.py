@@ -318,7 +318,7 @@ if __name__ == '__main__':
     clf = DecisionTreeClassifier()
     clf = GradientBoostingClassifier()
     
-    clf = RandomForestClassifier()
+    clf = RandomForestClassifier(n_estimators = 15)
     
     
 #    diff features
